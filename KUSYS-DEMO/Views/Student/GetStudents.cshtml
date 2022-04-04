@@ -1,0 +1,37 @@
+﻿@model List<Student>
+
+@TempData["Message"]
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Student Number</th>
+            <th scope="col">Full Name</th>
+            <th scope="col">#</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.StudentId</td>
+                <td>@item.FirstName @item.LastName</td>
+                <td>
+                    <a asp-action="Delete" asp-controller="Student" asp-route-id="@item.StudentId" class="btn btn-danger">Sil</a>
+                    <a asp-action="Update" asp-controller="Student" asp-route-id="@item.StudentId" class="btn btn-primary">Güncelle</a>
+                    <a onclick="showInPopUp('@Url.Action("Detail","Student",new {id=item.StudentId },Context.Request.Scheme)', 'Detail')" class="btn btn-secondary">Detay</a>
+                    <a asp-action="AddCourse" asp-controller="Course" asp-route-id="@item.StudentId" class="btn btn-success">Ders Ekle</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="row">
+    <div class="col-12 text-black-50"></div>
+    <div class="col-5">
+        @*<a asp-action="Create" asp-controller="Student" class="btn btn-primary">Öğrenci Ekle</a>*@
+        <a onclick="showInPopUp('@Url.Action("Create","Student",null,Context.Request.Scheme)')" class="btn btn-primary">Öğrenci Ekle</a>
+    </div>
+</div>

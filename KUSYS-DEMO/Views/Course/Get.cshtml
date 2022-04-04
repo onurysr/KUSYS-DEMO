@@ -1,0 +1,19 @@
+﻿@model List<Course>
+@TempData["Message"]
+<table class="table">
+	<thead>
+        <tr>
+            <th scope="col">Ders Numarası</th>
+            <th scope="col">Ders Adı</th>
+        </tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model)
+		{
+        <tr>
+            <td>@item.CourseId</td>
+            <td>@item.CourseName</td>
+        </tr>
+		}
+	</tbody>
+</table>

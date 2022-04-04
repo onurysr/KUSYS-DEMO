@@ -1,0 +1,25 @@
+﻿@model StudentDetailViewModel
+@{ 
+    Layout = null;
+}
+<h1>@Model.StudentId Numaralı Öğrenci Sayfası</h1>
+
+<div class="row">
+    <div class="col-6 text-black-50">Öğrenci Numarası: </div>
+    <div class="col-6">@Model.StudentId</div>
+</div>
+
+<div class="row">
+    <div class="col-6 text-black-50">Öğrenci Adı: </div>
+    <div class="col-6">@Model.FirstName</div>
+</div>
+
+<div class="row">
+    <div class="col-6 text-black-50">Öğrenci Soyadı: </div>
+    <div class="col-6">@Model.LastName</div>
+</div>
+
+<div class="row">
+    <div class="col-6 text-black-50">Aldığı ders sayısı: </div>
+    <div class="col-6">@Model.NumberOfCourses</div>
+</div>

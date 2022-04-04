@@ -1,0 +1,58 @@
+﻿@model StudentViewModel
+
+@{ 
+    Layout = null;
+}
+
+<h1>Öğrenci Ekle</h1>
+
+<div class="bg-danger">
+    <div asp-validation-summary="All">
+    </div>
+</div>
+
+<form method="post" asp-action="Create" asp-controller="Student">
+
+    <div class="row">
+        <div class="col-6 text-black-50">Öğrenci Numarası</div>
+        <div class="col-6">
+            <input asp-for="StudentId" class="form-control" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-6 text-black-50">Öğrenci Adı</div>
+        <div class="col-6">
+            <input asp-for="FirstName" class="form-control" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-6 text-black-50">Öğrenci Soyadı</div>
+        <div class="col-6">
+            <input asp-for="LastName" class="form-control" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-6 text-black-50">Öğrenci Doğum Tarihi</div>
+        <div class="col-6">
+            <input asp-for="BirthDate" class="form-control" />
+        </div>
+    </div>
+
+    <!--<div class="row">
+        <div class="col-3 text-black-50">Ders</div>
+        <div class="col-3">
+            <select asp-for="CourseId" asp-items="ViewBag.CourseList" class="form-control"></select>-->
+    @*KategoriId ve ViewBag eşleştiğinde gelicek*@
+    <!--</div>
+    </div>-->
+
+    <div class="row">
+        <div class="col-3 text-black-50"></div>
+        <div class="col-5">
+            <input type="submit" value="Ekle" class="btn btn-danger" />
+        </div>
+    </div>
+</form>

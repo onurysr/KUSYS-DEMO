@@ -1,0 +1,38 @@
+﻿@model CourseViewModel
+
+    
+
+<div class="bg-danger">
+    <div asp-validation-summary="All">
+    </div>
+</div>
+
+
+
+<form method="post" asp-action="AddCourse" asp-controller="Course">
+    <div class="col-6 text-black-50">
+        <div class="bg-danger">@TempData["Message"]</div>
+    </div>
+    <div class="row">
+        <div class="col-3 text-black-50">Öğrenci Numarası</div>
+        <div class="col-3">
+            <input asp-for="StudentId" type="hidden"/>
+            <label class="form-control">@Model.StudentId</label>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-3 text-black-50">Kategorisi</div>
+        <div class="col-3">
+            <select asp-for="CourseId" asp-items="ViewBag.CourseList" class="form-control"></select>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-3 text-black-50"></div>
+        <div class="col-5">
+            <input type="submit" value="Ekle" class="btn btn-danger" />
+        </div>
+    </div>
+</form>
