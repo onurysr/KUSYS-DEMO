@@ -18,11 +18,11 @@ namespace KUSYS_DEMO.Controllers
 
         public IActionResult Get()
         {
-            var data = _dbContext.Courses.ToList();
+            var data = _dbContext.Courses.ToList(); //derleri listeler
             return View(data);
         }
 
-        public IActionResult GetCoursesWithStudents()
+        public IActionResult GetCoursesWithStudents() //Tüm öğrenciler ve aldığı dersleri gösteren action
         {
             var data = _dbContext.StudentCourses.Include(x => x.Student).Include(x => x.Course)
                 .OrderBy(x => x.StudentId)
@@ -31,20 +31,20 @@ namespace KUSYS_DEMO.Controllers
         }
 
         [HttpGet]
-        public IActionResult AddCourse(string? id)
+        public IActionResult AddCourse(string? id) //Öğrenciye Ders ekleme işlemi yapan action
         {
-            var student = _dbContext.Students.FirstOrDefault(x => x.StudentId == id);
+            var student = _dbContext.Students.FirstOrDefault(x => x.StudentId == id); //gelen id ile veritabında studentId eşleme işlemi
             if (student == null)
             {
                 return RedirectToAction(nameof(GetCoursesWithStudents));
             }
 
-            var model = new CourseViewModel()
+            var model = new CourseViewModel() //öğrenci numarası göstermek için kullanılan viewmodel
             {
                 StudentId = student.StudentId
             };
 
-            ViewBag.CourseList = GetCourseList();
+            ViewBag.CourseList = GetCourseList();//viewBagle dersleri view'a göndermek için kullandım
             return View(model);
         }
 
@@ -56,9 +56,11 @@ namespace KUSYS_DEMO.Controllers
                 return View(model);
             }
 
-            var course = _dbContext.StudentCourses.Where(x => x.StudentId == model.StudentId).ToList();
+            var course = _dbContext.StudentCourses
+                .Where(x => x.StudentId == model.StudentId)
+                .ToList();//modelden gelen studentId ile Veritabaındaki studentId eşleşen Öğreni-Dersleri Liste olarak atamasını yaptım
 
-            foreach (var item in course)
+            foreach (var item in course) //tüm dersleri foreachle dönüp öğrencinin daha önce aldığı bir ders mi diye kontrol ettim 
             {
                 if (item.CourseId == model.CourseId)
                 {     
@@ -67,7 +69,7 @@ namespace KUSYS_DEMO.Controllers
                     return View(model);
                 }
             }
-            var Student = new StudentCourse()
+            var Student = new StudentCourse() //CourseId ve Student Id'yi yeni StudentCourse Nesnesine atadım
             {
                 CourseId = model.CourseId,
                 StudentId = model.StudentId
@@ -90,9 +92,9 @@ namespace KUSYS_DEMO.Controllers
 
         }
 
-        private List<SelectListItem> GetCourseList()
+        private List<SelectListItem> GetCourseList() //birden çok veriyi getirmek için SelectListItem kullandı
         {
-            var courses = _dbContext.Courses.OrderBy(x => x.CourseName).ToList();
+            var courses = _dbContext.Courses.OrderBy(x => x.CourseName).ToList(); //derlerin listesini döndürüp courses değişkenine atadım
 
             var courseList = new List<SelectListItem>()
             {
@@ -100,7 +102,7 @@ namespace KUSYS_DEMO.Controllers
             };
             foreach (var item in courses)
             {
-                courseList.Add(new SelectListItem(item.CourseName, item.CourseId));
+                courseList.Add(new SelectListItem(item.CourseName, item.CourseId)); //foreacle tüm courses için CourseName ve idlerini attım
             }
 
 
