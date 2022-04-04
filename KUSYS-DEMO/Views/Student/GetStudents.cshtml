@@ -2,7 +2,7 @@
 
 @TempData["Message"]
 
-
+<h1>Toplam Kayıt Sayısı:@Model.Count</h1>
 
 <table class="table">
     <thead>
@@ -35,3 +35,31 @@
         <a onclick="showInPopUp('@Url.Action("Create","Student",null,Context.Request.Scheme)')" class="btn btn-primary">Öğrenci Ekle</a>
     </div>
 </div>
+<br />
+    <input type="button" value="<" class="btn btn-success" id="btn-onceki" />
+    @ViewBag.Page/@ViewBag.Limit
+    <input type="button" value=">" class="btn btn-success" id="btn-sonraki" />
+
+
+@section Scripts{
+    <script>
+        var limit = @ViewBag.Limit;
+        var page =@ViewBag.Page;
+            $("#btn-onceki").click(function () {
+                if (page>1) {
+                    page -= 1;
+                    var url = "Student/GetStudents?page=" + page;
+                    var url2 = '@Url.Action("GetStudents", "Student", new {page=ViewBag.Page-1})';
+                    window.location.href = url2;
+
+                }
+        });
+        $("#btn-sonraki").click(function () {
+            if (page < limit) {
+                var url2 = '@Url.Action("GetStudents", "Student", new {page=ViewBag.Page+1})';
+                    window.location.href = url2;
+            }
+
+        });
+    </script>
+}

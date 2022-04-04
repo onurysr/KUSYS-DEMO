@@ -14,14 +14,22 @@ namespace KUSYS_DEMO.Controllers
         {
             _dbContext = dbContext;
         }
+        private int _pageSize = 10;
 
 
         [HttpGet]
-        public async Task<IActionResult> GetStudents()//öğrenci listesini getiren action
+        public async Task<IActionResult> GetStudents(int? page=1)//öğrenci listesini getiren action
         {
 
-            var model = await _dbContext.Students.Include(x => x.Courses).OrderBy(x => x.StudentId).ToListAsync(); //veritabaından Students tablosunu çektim ve StudentId'ye göre sıraladım ve model değişkenine atıp View'a gönderdim
+            var model = await _dbContext.Students
+                .Include(x => x.Courses)
+                .OrderBy(x => x.StudentId)
+                .Skip((page.GetValueOrDefault() - 1) * _pageSize) //her sayafada 10 veri göstermek için örn:3.sayfa için verinin 21 den başlaması lazım onun 3-1=2*10=20 ilk 20 veriyi skip et
+                .Take(_pageSize)
+                .ToListAsync(); //veritabaından Students tablosunu çektim ve StudentId'ye göre sıraladım ve model değişkenine atıp View'a gönderdim
 
+            ViewBag.Page = page.GetValueOrDefault(1);
+            ViewBag.Limit = (int)Math.Ceiling(_dbContext.Students.Count() / (double)_pageSize);//öğrenci sayısı/pagesize bize gidilebilecek sayfa sayısını verir.
 
             return View(model);
         }
